@@ -1,6 +1,6 @@
 {
   "name": "vue-house",
-  "version": "0.0.46",
+  "version": "0.0.52",
   "description": "基于three.js vr看房",
   "main": "dist/house.js",
   "homepage": "https://github.com/TcTOrz",

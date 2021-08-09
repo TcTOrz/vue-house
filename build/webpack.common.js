@@ -1,7 +1,7 @@
 /*
  * @Author: Li Jian
  * @Date: 2021-08-05 10:48:58
- * @LastEditTime: 2021-08-09 13:26:03
+ * @LastEditTime: 2021-08-09 16:26:33
  * @LastEditors: Li Jian
  */
 const path = require('path')
@@ -10,18 +10,21 @@ const webpack = require('webpack')
 const pkg = require('../package.json')
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: path.resolve(__dirname, '../src/index.js'),
   output: {
-    path: path.resolve('dist'),
-    // filename:  (pathData) => {
-    //   return pathData.chunk.name === 'main' ? 'house.js' : '[name].js';
-    // },
+    path: path.resolve(__dirname, '../dist'),
     filename: 'house.js',
     library: {
       name: 'VueHouse',
       type: 'umd'
     },
     clean: true
+  },
+  resolve: {
+    alias: {
+      'OrbitControls$': path.resolve(__dirname, '../src/plugins/OrbitControls.js'),
+      'imgs': path.resolve(__dirname, '../asset/resource/images'),
+    }
   },
   externals: { // 使用外部扩展
     three: {
@@ -36,15 +39,23 @@ module.exports = {
     rules: [{
       test: /\.vue$/,
       loader: 'vue-loader',
+      include: [path.resolve(__dirname, '../src')],
+      exclude: /node_modules/
     }, {
       test: /\.js$/,
-      loader: 'babel-loader'
+      loader: 'babel-loader',
+      exclude: /node_modules/
     }, {
       test: /\.css$/,
       use: [
         'vue-style-loader',
         'css-loader'
-      ]
+      ],
+      exclude: /node_modules/
+    }, {
+      test: /\.jpg/,
+      type: 'asset/resource',
+      exclude: /node_modules/
     }]
   },
   plugins: [
@@ -60,7 +71,6 @@ License: ${pkg.license}`
     }),
     new webpack.ProvidePlugin({
       three: 'three',
-      // orbit: '../src/plugins/OrbitControls.js'
     }),
     // new webpack.ProgressPlugin({
     //   activeModules: false,
@@ -77,15 +87,4 @@ License: ${pkg.license}`
     //   percentBy: null,
     // })
   ],
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendors',
-  //         chunks: 'all',
-  //       },
-  //     },
-  //   },
-  // },
 }

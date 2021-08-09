@@ -1,7 +1,7 @@
 <!--
  * @Author: Li Jian
  * @Date: 2021-08-06 09:23:47
- * @LastEditTime: 2021-08-09 14:12:23
+ * @LastEditTime: 2021-08-09 15:55:31
  * @LastEditors: Li Jian
 -->
 <template>
@@ -9,34 +9,42 @@
 </template>
 
 <script>
-import { OrbitControls } from '../../../plugins/OrbitControls.js'
+// import { OrbitControls } from '../../../plugins/OrbitControls.js'
+import { OrbitControls } from 'OrbitControls'
+
+import imgl from 'imgs/0_l.jpg'
+import imgr from 'imgs/0_r.jpg'
+import imgf from 'imgs/0_f.jpg'
+import imgb from 'imgs/0_b.jpg'
+import imgu from 'imgs/0_u.jpg'
+import imgd from 'imgs/0_d.jpg'
 
 export default {
   name: 'TzHouse',
   props: {
     img_l: {
       type: String,
-      default: './images/0_l.jpg'
+      default: imgl
     },
     img_r: {
       type: String,
-      default: './images/0_r.jpg'
+      default: imgr
     },
     img_u: {
       type: String,
-      default: './images/0_u.jpg'
+      default: imgu
     },
     img_d: {
       type: String,
-      default: './images/0_d.jpg'
+      default: imgd
     },
     img_f: {
       type: String,
-      default: './images/0_f.jpg'
+      default: imgf
     },
     img_b: {
       type: String,
-      default: './images/0_b.jpg'
+      default: imgb
     }
   },
   data () {
