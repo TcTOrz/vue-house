@@ -1,0 +1,51 @@
+<!--
+ * @Author: Li Jian
+ * @Date: 2021-08-05 14:21:46
+ * @LastEditTime: 2021-08-09 14:11:52
+ * @LastEditors: Li Jian
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>demo0</title>
+  <script src="https://www.unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://www.unpkg.com/three@0.131.3/build/three.js"></script>
+  <!-- <script src="../dist/vendors.js"></script> -->
+  <script src="../dist/house.js"></script>
+  
+</head>
+<body>
+  <div id="app">{{ msg }}
+    <tz-house
+      :img_l="imgl"
+      :img_r="imgr"
+      :img_u="imgu"
+      :img_d="imgd"
+      :img_f="imgf"
+      :img_b="imgb"
+      ></tz-house>
+  </div>
+  <script>
+    // console.log(VueHouse);
+    Vue.use(VueHouse.default)
+
+    // console.log(VueHouse.default);
+
+    new Vue({
+      el: '#app',
+      data: {
+        msg: 'Hello Vue.js!',
+        imgl: './images/0_l.jpg',
+        imgr: './images/0_r.jpg',
+        imgu: './images/0_u.jpg',
+        imgd: './images/0_d.jpg',
+        imgf: './images/0_f.jpg',
+        imgb: './images/0_b.jpg'
+      },
+    })
+  </script>
+</body>
+</html>
