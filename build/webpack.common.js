@@ -1,7 +1,7 @@
 /*
  * @Author: Li Jian
  * @Date: 2021-08-05 10:48:58
- * @LastEditTime: 2021-08-09 16:26:33
+ * @LastEditTime: 2021-08-10 14:08:12
  * @LastEditors: Li Jian
  */
 const path = require('path')
@@ -23,7 +23,8 @@ module.exports = {
   resolve: {
     alias: {
       'OrbitControls$': path.resolve(__dirname, '../src/plugins/OrbitControls.js'),
-      'imgs': path.resolve(__dirname, '../asset/resource/images'),
+      '@imgs': path.resolve(__dirname, '../asset/resource/images'),
+      '@src': path.resolve(__dirname, '../src'),
     }
   },
   externals: { // 使用外部扩展
@@ -42,9 +43,14 @@ module.exports = {
       include: [path.resolve(__dirname, '../src')],
       exclude: /node_modules/
     }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
     }, {
       test: /\.css$/,
       use: [
@@ -72,19 +78,20 @@ License: ${pkg.license}`
     new webpack.ProvidePlugin({
       three: 'three',
     }),
-    // new webpack.ProgressPlugin({
-    //   activeModules: false,
-    //   entries: true,
-    //   handler(percentage, message, ...args) {
-    //     // custom logic
-    //     console.info(percentage, message, ...args);
-    //   },
-    //   modules: true,
-    //   modulesCount: 5000,
-    //   profile: false,
-    //   dependencies: true,
-    //   dependenciesCount: 10000,
-    //   percentBy: null,
-    // })
+    new webpack.ProgressPlugin({
+      activeModules: false,
+      entries: true,
+      handler(percentage, message, ...args) {
+        // custom logic
+        if (!args.length) return
+        console.info((percentage*100).toFixed(0)+'%', message, args);
+      },
+      modules: true,
+      modulesCount: 5000,
+      profile: false,
+      dependencies: true,
+      dependenciesCount: 10000,
+      percentBy: null,
+    })
   ],
 }

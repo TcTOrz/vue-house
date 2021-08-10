@@ -1,7 +1,7 @@
 <!--
  * @Author: Li Jian
  * @Date: 2021-08-06 09:23:47
- * @LastEditTime: 2021-08-09 15:55:31
+ * @LastEditTime: 2021-08-10 12:25:17
  * @LastEditors: Li Jian
 -->
 <template>
@@ -9,15 +9,14 @@
 </template>
 
 <script>
-// import { OrbitControls } from '../../../plugins/OrbitControls.js'
 import { OrbitControls } from 'OrbitControls'
 
-import imgl from 'imgs/0_l.jpg'
-import imgr from 'imgs/0_r.jpg'
-import imgf from 'imgs/0_f.jpg'
-import imgb from 'imgs/0_b.jpg'
-import imgu from 'imgs/0_u.jpg'
-import imgd from 'imgs/0_d.jpg'
+import imgl from '@imgs/0_l.jpg'
+import imgr from '@imgs/0_r.jpg'
+import imgf from '@imgs/0_f.jpg'
+import imgb from '@imgs/0_b.jpg'
+import imgu from '@imgs/0_u.jpg'
+import imgd from '@imgs/0_d.jpg'
 
 export default {
   name: 'TzHouse',
@@ -56,12 +55,33 @@ export default {
       controls: null,
     }
   },
-  mounted () {
+  beforeCreate() {
+    if (this.$house) {
+      this.$house.width ? this.$house.width = this.$house.width : this.$house.width = '300px'
+      this.$house.height ? this.$house.height = this.$house.height : this.$house.height = '200px'
+      this.$house.canvasWidth ? this.$house.canvasWidth = this.$house.canvasWidth : this.$house.canvasWidth = '2400'
+      this.$house.canvasHeight ? this.$house.canvasHeight = this.$house.canvasHeight : this.$house.canvasHeight = '1400'
+      'autoRotate' in this.$house ? this.$house.autoRotate = this.$house.autoRotate : this.$house.autoRotate = true
+    } else {
+      this.$house = {}
+      this.$house.width = '300px'
+      this.$house.height = '200px'
+      this.$house.canvasWidth = '2400'
+      this.$house.canvasHeight = '1400'
+      this.$house.autoRotate = true
+    }
+  },
+  mounted() {
+    this.canvas = document.getElementById('container')
+    this.canvas.style.width = this.$house.width + 'px'
+    this.canvas.style.height = this.$house.height + 'px'
+    this.canvas.width = this.$house.canvasWidth
+    this.canvas.height = this.$house.canvasHeight
     this.start()
   },
   methods: {
     start() {
-      this.canvas = document.getElementById('container')
+
       this.renderer = new three.WebGLRenderer({ canvas: this.canvas })
       
       this.camera = new three.PerspectiveCamera(
@@ -70,14 +90,15 @@ export default {
         0.1,
         1000
       )
-      this.camera.position.set(0, 0, 0.00001)
+      
+      this.camera.position.set(0, 0, 0.000001)
 
       this.scene = new three.Scene()
 
       this.controls = new OrbitControls(this.camera, this.canvas)
       // this.controls = new three.OrbitControls(this.camera, this.canvas)
       // this.controls = new orbit(this.camera, this.canvas)
-      this.controls.autoRotate = true
+      this.controls.autoRotate = this.$house.autoRotate
 
       this.scene.background = new three.Color(0xaaaaaa)
 
@@ -104,7 +125,7 @@ export default {
         // cube.rotation.x = time * 0.0001
         // cube.rotation.y = time * 0.0001
         // cube.rotation.z = time * 0.0001
-        self.controls.update()
+        self.$house.autoRotate && self.controls.update()
         self.renderer.render(self.scene, self.camera)
       }
       requestAnimationFrame(render)
@@ -114,9 +135,6 @@ export default {
 </script>
 
 <style scoped>
-  /* .tz-color {
-    color: brown;
-  } */
   #container {
     width: 300px;
     height: 200px;
