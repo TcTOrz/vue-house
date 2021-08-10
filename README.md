@@ -9,5 +9,12 @@
   Vue.use(VueHouse)
 
   // use
-  <tz-house></tz-house>
+  <tz-house
+    :img_l="imgl"
+    :img_r="imgr"
+    :img_u="imgu"
+    :img_d="imgd"
+    :img_f="imgf"
+    :img_b="imgb"
+  ></tz-house>
 ```
